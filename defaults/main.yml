@@ -1,0 +1,107 @@
+librenms_packages:
+  - curl
+  - apache2
+  - composer
+  - fping
+  - git
+  - graphviz
+  - imagemagick
+  - mtr-tiny
+  - nmap
+  - python-memcache
+  - python-mysqldb
+  - rrdtool
+  - snmp
+  - snmpd
+  - whois
+  - acl
+  - php-ldap
+  - monitoring-plugins
+  - nagios-plugins-contrib
+  - python3-pip
+
+librenms_user: librenms
+librenms_home: /opt/librenms
+librenms_group: "{{ librenms_user }}"
+librenms_sql_databases:
+  - name: librenms
+    encoding: utf8
+    collation: utf8_unicode_ci
+
+librenms_admin_user: admin
+# only set once during installation
+librenms_admin_password: admin
+
+# must be set
+# librenms_sql_db_password:
+
+librenms_sql_users:
+  - name: librenms
+    password: "{{ librenms_sql_db_password | mandatory }}"
+    priv: "librenms.*:ALL"
+
+librenms_ignore_mounts:
+  # common
+  - /run
+  - /run/lock
+  - /sys/fs/cgroup
+  - /dev/shm
+  # pve
+  - /boot/efi
+  # synology
+  - /tmp
+  # thecus
+  - /rom
+  - /syslog
+  - /var
+  - /etc
+
+librenms_ignore_mounts_regexp: []
+# e.g.
+#
+#  # jenkins and jenkins nodes
+#  - /^\/run\/user\/\d+/
+#  # NFS mount points on thecus
+#  - /^\/raid\d+\/data\/_NAS_NFS_Exports_\/.+/
+#  # Thecus raidsys
+#  - /^\/raidsys\/\d+/
+
+librenms_rrdcached: unix:/var/run/rrdcached.sock
+# must be 1.7.0 since rrd tool is installed from ubuntu repo
+librenms_rrdtool_version: 1.7.0
+
+librenms_poller_threads: 4
+
+
+librenms_config_base_url: "http://{{ librenms_config_mydomain }}"
+librenms_config_mydomain: "{{ inventory_hostname }}"
+
+librenms_config_nets: []
+# - 192.168.10.0/24
+
+
+librenms_config_snmp_community: community
+librenms_config_snmp_authlevel: authPriv
+# must be set!
+#librenms_config_snmp_authname:
+#librenms_config_snmp_authpass:
+#librenms_config_snmp_cryptopass:
+
+librenms_config_auth_mechanism: mysql
+
+librenms_config_ldap: false
+librenms_config_auth_ldap_server:
+librenms_config_auth_ldap_suffix:
+librenms_config_auth_ldap_groupbase:
+librenms_config_auth_ldap_group:
+librenms_config_auth_ldap_binddn:
+librenms_config_auth_ldap_bindpassword: false
+
+librenms_config_enable_proxmox: 1
+
+librenms_config_influxdb_enable: false
+librenms_config_influxdb_host:
+librenms_config_influxdb_port: 8006
+librenms_config_influxdb_db: librenms
+librenms_config_influxdb_username: librenms
+librenms_config_influxdb_password: librenms

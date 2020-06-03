@@ -1,0 +1,100 @@
+<?php
+# {{ ansible_managed }} by tobias_richter.librenms
+## Have a look in defaults.inc.php for examples of settings you can set here. DO NOT EDIT defaults.inc.php!
+
+### Database config
+$config['db_host']    = 'localhost';
+$config['db_port']    = '3306';
+$config['db_user']    = 'librenms';
+$config['db_pass']    = '{{ librenms_sql_db_password | mandatory }}';
+$config['db_name']    = 'librenms';
+$config['db_socket']  = '';
+
+### Basic librenms configuration
+$config['user']         = 'librenms';
+$config['install_dir']  = "/opt/librenms";
+$config['base_url']     = "{{ librenms_config_base_url }}";
+$config['mydomain']     = '{{ librenms_config_mydomain }}';
+
+### RRD configuration
+### Enable this to use rrdcached. Be sure rrd_dir is within the rrdcached dir
+### and that your web server has permission to talk to rrdcached.
+{% if librenms_rrdcached is defined %}
+$config['rrdcached']       = "{{ librenms_rrdcached }}";
+{% endif %}
+$config['rrdtool_version'] = "{{ librenms_rrdtool_version }}";
+
+### Update configuration
+$config['update_channel'] = 'release';  # uncomment to follow the monthly release channel
+
+### SNMP configuration
+$config['snmp']['community']            = array("{{ librenms_config_snmp_community }}");
+$config['snmp']['version']              = ['v3', 'v2c', 'v1'];
+$config['snmp']['v3'][1]['authlevel']   = "authPriv";
+$config['snmp']['v3'][1]['authname']    = "{{ librenms_config_snmp_authname | mandatory }}";
+$config['snmp']['v3'][1]['authpass']    = "{{ librenms_config_snmp_authpass | mandatory }}";
+$config['snmp']['v3'][1]['authalgo']    = "MD5";
+$config['snmp']['v3'][1]['cryptopass']  = "{{ librenms_config_snmp_cryptopass | mandatory }}";
+$config['snmp']['v3'][1]['cryptoalgo']  = "DES";
+
+### Auto Discovery configuration
+{% for librenms_config_net in librenms_config_nets %}
+# $config['nets'][] = "{{ librenms_config_net }}";
+{% endfor %}
+
+$config['auth_mechanism']                       = '{{ librenms_config_auth_mechanism }}';
+{% if librenms_config_ldap %}
+### Authentication Model / LDAP configuration
+$config['auth_ldap_server']                     = '{{ librenms_config_auth_ldap_server }}'; // Set server(s), space separated. Prefix with ldaps:// for ssl
+$config['auth_ldap_suffix']                     = ',{{ librenms_config_auth_ldap_suffix }}';       // appended to usernames
+$config['auth_ldap_groupbase']                  = '{{ librenms_config_auth_ldap_groupbase }}';       // all groups must be inside this
+$config['auth_ldap_groups']['admins']['level']  = 10;                                   // set admin group to admin level
+
+$config['auth_ldap_port']                       = 686;                                  // 389 or 636 for ssl
+$config['auth_ldap_starttls']                   = False;                                // Enable TLS on port 389
+$config['auth_ldap_prefix']                     = 'uid=';                               // prepended to usernames
+$config['auth_ldap_group']                      = '{{ librenms_config_auth_ldap_group }}';      // generic group with level 0
+$config['auth_ldap_groupmemberattr']            = 'memberUid';                          // attribute to use to see if a user is a member of a group
+$config['auth_ldap_uid_attribute']              = 'uidNumber';                          // attribute for unique id
+$config['auth_ldap_debug']                      = false;                                // enable for verbose debug messages
+$config['auth_ldap_userdn']                     = false;                                // Uses a users full DN as the value of the member attribute in a group instead of member: username. (it’s member: uid=username,ou=groups,dc=domain,dc=com)
+
+$config['auth_ldap_binddn']                     = '{{ librenms_config_auth_ldap_binddn }}';        // overrides binduser
+$config['auth_ldap_bindpassword']               = '{{ librenms_config_auth_ldap_bindpassword }}';
+
+{% endif %}
+
+# Use SNMP instead of sysname
+$config['force_ip_to_sysname'] = true;
+
+### Enable proxmox plugin
+$config['enable_proxmox'] = {{ librenms_config_enable_proxmox }};
+
+### Configure mount ignores
+$config['ignore_mount_removable']  = 1;
+$config['ignore_mount_network']    = 1;
+$config['ignore_mount_optical']    = 1;
+
+{% for ignore_mount in librenms_ignore_mounts %}
+$config['ignore_mount'][] = "{{ ignore_mount }}";
+{% endfor %}
+{% for ignore_mount_regexp in librenms_ignore_mounts_regexp %}
+$config['ignore_mount_regexp'][] = "{{ ignore_mount_regexp }}";
+{% endfor %}
+
+# Enable service menu
+$config['show_services']           = 1;
+$config['nagios_plugins']   = "/usr/lib/nagios/plugins";
+
+{% if librenms_config_influxdb_enable %}
+# configure influxdb
+$config['influxdb']['enable'] = {{ librenms_config_influxdb_enable }};
+$config['influxdb']['transport'] = 'http';
+$config['influxdb']['host'] = '{{ librenms_config_influxdb_host }}}';
+$config['influxdb']['port'] = '{{ librenms_config_influxdb_port }}';
+$config['influxdb']['db'] = 'librenms';
+$config['influxdb']['username'] = '{{ librenms_config_influxdb_username }}';
+$config['influxdb']['password'] = '{{ librenms_config_influxdb_password }}';
+$config['influxdb']['timeout'] = 0;
+$config['influxdb']['verifySSL'] = false;
+{% endif %}

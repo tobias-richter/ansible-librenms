@@ -1,0 +1,20 @@
+- name: Check if config.php is present
+  stat:
+    path: /opt/librenms/config.php
+  register: __librenms_config
+
+- name: Deploy config.php
+  template:
+    src: opt/librenms/config.php.j2
+    dest: /opt/librenms/config.php
+    owner: "{{ librenms_user }}"
+    group: "{{ librenms_group }}"
+  notify:
+    - restart apache
+
+- name: Deploy librenms cron config.
+  template:
+    src: etc/cron.d/librenms.j2
+    dest: /etc/cron.d/librenms
+  tags:
+    - cron

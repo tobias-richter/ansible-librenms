@@ -1,0 +1,9 @@
+- name: Enable universe repository.
+  apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release|lower }} universe"
+  when: ansible_distribution  == 'Ubuntu'
+
+- name: install required packages.
+  apt:
+    name: "{{ librenms_packages | union(librenms_packages_distro) | unique }}"
+    cache_valid_time: 3600

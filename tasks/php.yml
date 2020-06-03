@@ -1,0 +1,10 @@
+- name: Configure php.
+  ini_file:
+    path: "{{ item }}"
+    section: Date
+    option: date.timezone
+    value: Europe/Berlin
+   # state: absent
+  with_items: "{{ librenms_php_config_items }}"
+  notify:
+    - restart apache

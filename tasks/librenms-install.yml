@@ -1,0 +1,68 @@
+- name: Check if librenms is already installed
+  stat:
+    path: "{{ librenms_home }}"
+  register: __librenms_path
+
+- name: Install librenms
+  composer:
+    command: create-project
+    arguments: --keep-vcs librenms/librenms /opt/librenms dev-master
+    no_dev: yes
+    prefer_dist: yes
+    working_dir: /tmp
+  when: __librenms_path.stat.exists == false
+
+- name: Change ownership
+  file:
+    path: "{{ librenms_home }}"
+    owner: "{{ librenms_user }}"
+    group: "{{ librenms_group }}"
+    recurse: true
+
+- name: "Apply permissions on {{ librenms_home }}"
+  file:
+    path: "{{ librenms_home }}"
+    mode: u=rwX,g=rwX
+
+- name: Set acls
+  command: "{{ item }}"
+  with_items:
+    - "setfacl -d -m g::rwx {{ librenms_home }}/rrd {{ librenms_home }}/logs {{ librenms_home }}/bootstrap/cache/ {{ librenms_home }}/storage/"
+    - "setfacl -R -m g::rwx {{ librenms_home }}/rrd {{ librenms_home }}/logs {{ librenms_home }}/bootstrap/cache/ {{ librenms_home }}/storage/"
+
+- name: Install python requirements.
+  pip:
+    executable: /usr/bin/pip3
+    requirements: "{{ librenms_home }}/requirements.txt"
+  become_user: "{{ librenms_user }}"
+  tags:
+    - pip
+
+- name: Update running daily.sh.
+  command: "./daily.sh"
+  args:
+    chdir: "{{ librenms_home }}"
+  become_user: "{{ librenms_user }}"
+  tags:
+    - migrate
+
+- name: Initially set admin user password.
+  command: "./adduser.php {{ librenms_admin_user }} {{ librenms_admin_password }} 10"
+  args:
+    chdir: "{{ librenms_home }}"
+  become_user: "{{ librenms_user }}"
+  tags:
+    - migrate
+
+- name: Deploy cronjob
+  copy:
+    src: "{{ librenms_home }}/librenms.nonroot.cron"
+    dest: /etc/cron.d/librenms
+    remote_src: true
+
+- name: Deploy logrotate
+  copy:
+    src: "{{ librenms_home }}/misc/librenms.logrotate"
+    dest: /etc/logrotate.d/librenms
+    remote_src: true
+
