@@ -1,3 +1,23 @@
+galaxy_info:
+  role_name: librenms
+  author: Tobias Richter
+  description: Ansible Role for setting up and managing librenms.
+  license: Apache
+  min_ansible_version: 2.7
+
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - bionic
+
+  galaxy_tags:
+    - librenms
+    - monitoring
+    - snmp
+
 dependencies:
   - role: geerlingguy.mysql
     mysql_packages: [ "mariadb-client","mariadb-server","python-mysqldb" ]
