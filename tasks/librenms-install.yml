@@ -26,7 +26,7 @@
 
 - name: Set acls
   acl:
-    default: "{{ item.default | default(false)}}"
+    default: "{{ item.default | default(false) }}"
     path: "{{ item.path }}"
     permissions : "rwx"
     etype : "group"
@@ -58,22 +58,25 @@
     executable: /usr/bin/pip3
     requirements: "{{ librenms_home }}/requirements.txt"
   become_user: "{{ librenms_user }}"
+  become: yes
   tags:
     - pip
 
-- name: Update running daily.sh.
+- name: Update running daily.sh. # noqa 301
   command: "./daily.sh"
   args:
     chdir: "{{ librenms_home }}"
   become_user: "{{ librenms_user }}"
+  become: yes
   tags:
     - migrate
 
-- name: Initially set admin user password.
+- name: Initially set admin user password. # noqa 301
   command: "./adduser.php {{ librenms_admin_user }} {{ librenms_admin_password }} 10"
   args:
     chdir: "{{ librenms_home }}"
   become_user: "{{ librenms_user }}"
+  become: yes
   tags:
     - migrate
 
