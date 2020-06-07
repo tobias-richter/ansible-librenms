@@ -32,7 +32,7 @@ This role requires Ansible 2.7 or higher.
 See [defaults/main.yml](defaults/main.yml) for the documented role variables.
 See also the distribution specific [vars](vars).
 
-Mandadtory variables are:
+Mandatory variables are:
 * `librenms_sql_db_password`
 
 ## Example Playbook
