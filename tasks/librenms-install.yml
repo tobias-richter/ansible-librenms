@@ -28,8 +28,8 @@
   acl:
     default: "{{ item.default | default(false) }}"
     path: "{{ item.path }}"
-    permissions : "rwx"
-    etype : "group"
+    permissions: "rwx"
+    etype: "group"
     entity: "{{ librenms_group }}"
     recursive : "{{ item.recursive | default(false) }}"
     state: present
@@ -91,4 +91,3 @@
     src: "{{ librenms_home }}/misc/librenms.logrotate"
     dest: /etc/logrotate.d/librenms
     remote_src: true
-

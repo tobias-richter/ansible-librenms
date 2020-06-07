@@ -20,7 +20,10 @@ galaxy_info:
 
 dependencies:
   - role: geerlingguy.mysql
-    mysql_packages: [ "mariadb-client","mariadb-server","python-mysqldb" ]
+    mysql_packages:
+      - mariadb-client
+      - mariadb-server
+      - python-mysqldb
     mysql_databases: "{{ librenms_sql_databases }}"
     mysql_users: "{{ librenms_sql_users }}"
     mysql_bind_address: '127.0.0.1'
