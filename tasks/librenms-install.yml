@@ -31,7 +31,7 @@
     permissions: "rwx"
     etype: "group"
     entity: "{{ librenms_group }}"
-    recursive : "{{ item.recursive | default(false) }}"
+    recursive: "{{ item.recursive | default(false) }}"
     state: present
   with_items:
     # default rules
