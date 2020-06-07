@@ -1,3 +1,4 @@
+# package to install
 librenms_packages:
   - curl
   - apache2
@@ -20,26 +21,43 @@ librenms_packages:
   - nagios-plugins-contrib
   - python3-pip
 
+# User and group to create with home directory
 librenms_user: librenms
 librenms_home: /opt/librenms
 librenms_group: "{{ librenms_user }}"
+
+# SQL database to create
 librenms_sql_databases:
   - name: librenms
     encoding: utf8
     collation: utf8_unicode_ci
 
-librenms_admin_user: admin
-# only set once during installation
-librenms_admin_password: admin
-
-# must be set
+# SQL database password, must be set
 # librenms_sql_db_password:
 
+# SQL Users to create
 librenms_sql_users:
   - name: librenms
     password: "{{ librenms_sql_db_password | mandatory }}"
     priv: "librenms.*:ALL"
 
+# Default admin user and password
+librenms_admin_user: admin
+
+# only set once during installation
+librenms_admin_password: admin
+
+# The auth mechanism to use (mysql, ldap)
+librenms_config_auth_mechanism: mysql
+
+# The librenms baseurl
+librenms_config_base_url: "http://{{ librenms_config_mydomain }}"
+
+# The librenms domain
+librenms_config_mydomain: "{{ inventory_hostname }}"
+
+
+# Ignore the following mounts
 librenms_ignore_mounts:
   # common
   - /run
@@ -56,6 +74,7 @@ librenms_ignore_mounts:
   - /var
   - /etc
 
+# Ignore the following mounts (regex)
 librenms_ignore_mounts_regexp: []
 # e.g.
 #
@@ -66,42 +85,50 @@ librenms_ignore_mounts_regexp: []
 #  # Thecus raidsys
 #  - /^\/raidsys\/\d+/
 
+# Path to the rrdached socket.
 librenms_rrdcached: unix:/var/run/rrdcached.sock
-# must be 1.7.0 since rrd tool is installed from ubuntu repo
+
+# The rrdtool version that is used
 librenms_rrdtool_version: 1.7.0
 
+# Parallel threads for the librenms poller
 librenms_poller_threads: 4
 
-
-librenms_config_base_url: "http://{{ librenms_config_mydomain }}"
-librenms_config_mydomain: "{{ inventory_hostname }}"
-
+# Networks for autodiscovery
 librenms_config_nets: []
 # - 192.168.10.0/24
 
-
+# snmp configuration
 librenms_config_snmp_community: community
 librenms_config_snmp_authlevel: authPriv
 # must be set!
-#librenms_config_snmp_authname:
-#librenms_config_snmp_authpass:
-#librenms_config_snmp_cryptopass:
+#librenms_config_snmp_authname: # "snmp-user"
+#librenms_config_snmp_authpass: # "snmp-password"
+#librenms_config_snmp_cryptopass: # "snmp-encryption"
 
-librenms_config_auth_mechanism: mysql
-
+# When set to true ldap is configured and the other ldap variables must be set
 librenms_config_ldap: false
-librenms_config_auth_ldap_server:
-librenms_config_auth_ldap_suffix:
-librenms_config_auth_ldap_groupbase:
-librenms_config_auth_ldap_group:
-librenms_config_auth_ldap_binddn:
-librenms_config_auth_ldap_bindpassword: false
+# The server to use
+librenms_config_auth_ldap_server: # e.g. ldap.main.corp
+# The server to use
+librenms_config_auth_ldap_suffix: # e.g. "ou=users,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_groupbase: # e.g. "ou=groups,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_group: # e.g. "cn=all,ou=groups,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_binddn: # e.g. "uid=ldapbind,ou=system,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_bindpassword: # e.g. "password_from_ldapbinduser"
 
+# Enables, disables proxmox in librenms
 librenms_config_enable_proxmox: 1
 
+# Enables/Disables influxdb feature
 librenms_config_influxdb_enable: false
+# The influxdb host
 librenms_config_influxdb_host:
+# The influxdb port
 librenms_config_influxdb_port: 8006
+# The influxdb database to use
 librenms_config_influxdb_db: librenms
+# The username for the influxdb
 librenms_config_influxdb_username: librenms
+# The password for the influxdb
 librenms_config_influxdb_password: librenms
