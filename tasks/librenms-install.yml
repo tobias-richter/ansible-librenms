@@ -10,7 +10,7 @@
     no_dev: yes
     prefer_dist: yes
     working_dir: /tmp
-  when: __librenms_path.stat.exists == false
+  when: not __librenms_path.stat.exists
 
 - name: Change ownership
   file:
@@ -25,10 +25,33 @@
     mode: u=rwX,g=rwX
 
 - name: Set acls
-  command: "{{ item }}"
+  acl:
+    default: "{{ item.default | default(false)}}"
+    path: "{{ item.path }}"
+    permissions : "rwx"
+    etype : "group"
+    entity: "{{ librenms_group }}"
+    recursive : "{{ item.recursive | default(false) }}"
+    state: present
   with_items:
-    - "setfacl -d -m g::rwx {{ librenms_home }}/rrd {{ librenms_home }}/logs {{ librenms_home }}/bootstrap/cache/ {{ librenms_home }}/storage/"
-    - "setfacl -R -m g::rwx {{ librenms_home }}/rrd {{ librenms_home }}/logs {{ librenms_home }}/bootstrap/cache/ {{ librenms_home }}/storage/"
+    # default rules
+    - path: "{{ librenms_home }}/rrd"
+      default: true
+    - path: "{{ librenms_home }}/logs"
+      default: true
+    - path: "{{ librenms_home }}/bootstrap/cache/"
+      default: true
+    - path: "{{ librenms_home }}/storage/"
+      default: true
+    # apply recursive
+    - path: "{{ librenms_home }}/rrd"
+      recursive: true
+    - path: "{{ librenms_home }}/logs"
+      recursive: true
+    - path: "{{ librenms_home }}/bootstrap/cache/"
+      recursive: true
+    - path: "{{ librenms_home }}/storage/"
+      recursive: true
 
 - name: Install python requirements.
   pip:
