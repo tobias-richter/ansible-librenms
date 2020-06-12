@@ -56,6 +56,20 @@ librenms_config_base_url: "http://{{ librenms_config_mydomain }}"
 # The librenms domain
 librenms_config_mydomain: "{{ inventory_hostname }}"
 
+# Ignore interfaces
+librenms_config_bad_if_regexps:
+  - '/^docker[\w]+$/'
+  - '/^lxcbr[0-9]+$/'
+  - '/^fwln.+$/'
+  - '/^fwpr.+$/'
+  - '/^fwbr.+$/'
+  - '/^veth.*$/'
+  - '/^virbr.*$/'
+  - '/^lo$/'
+  - '/^sit.*$/'
+  - '/^dummy.*$/'
+#  - '/^macvtap.*$/'
+#  - '/tun[0-9]+$/'
 
 # Ignore the following mounts
 librenms_ignore_mounts:

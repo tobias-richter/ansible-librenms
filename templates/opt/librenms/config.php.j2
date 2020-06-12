@@ -37,6 +37,11 @@ $config['snmp']['v3'][1]['authalgo']    = "MD5";
 $config['snmp']['v3'][1]['cryptopass']  = "{{ librenms_config_snmp_cryptopass | mandatory }}";
 $config['snmp']['v3'][1]['cryptoalgo']  = "DES";
 
+### Ignore interfaces
+{% for librenms_config_bad_if_regexp in librenms_config_bad_if_regexps %}
+$config['bad_if_regexp'][] = '{{ librenms_config_bad_if_regexp }}';
+{% endfor %}
+
 ### Auto Discovery configuration
 {% for librenms_config_net in librenms_config_nets %}
 # $config['nets'][] = "{{ librenms_config_net }}";
