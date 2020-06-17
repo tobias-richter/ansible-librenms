@@ -63,6 +63,7 @@ librenms_config_bad_if_regexps:
   - '/^fwln.+$/'
   - '/^fwpr.+$/'
   - '/^fwbr.+$/'
+  - '/^br.+$/'
   - '/^veth.*$/'
   - '/^virbr.*$/'
   - '/^lo$/'
