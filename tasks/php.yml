@@ -6,5 +6,4 @@
     value: Europe/Berlin
    # state: absent
   with_items: "{{ librenms_php_config_items }}"
-  notify:
-    - restart apache
+  notify: "{{ librenms_php_restart_services }}"

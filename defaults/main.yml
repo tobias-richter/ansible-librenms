@@ -146,3 +146,7 @@ librenms_config_influxdb_db: librenms
 librenms_config_influxdb_username: librenms
 # The password for the influxdb
 librenms_config_influxdb_password: librenms
+
+# The services to restart when php.ini was touched
+librenms_php_restart_services:
+  - apache2
