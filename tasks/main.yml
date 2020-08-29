@@ -1,9 +1,3 @@
-- name: gather os specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}.yml"
-    - "default.yml"
-
 - name: Install packages
   import_tasks: packages.yml
   tags:
@@ -25,8 +19,3 @@
   tags:
     - librenms-config
     - librenms
-
-- name: Configure php.
-  import_tasks: php.yml
-  tags:
-    - php

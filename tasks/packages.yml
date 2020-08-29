@@ -1,4 +1,4 @@
 - name: install required packages.
   apt:
-    name: "{{ librenms_packages | union(librenms_packages_distro) | unique }}"
+    name: "{{ librenms_packages }}"
     cache_valid_time: 3600
