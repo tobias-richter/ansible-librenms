@@ -9,14 +9,13 @@ librenms_packages:
   - imagemagick
   - mtr-tiny
   - nmap
-  - python-memcache
-  - python-mysqldb
+  - python3-memcache
+  - python3-mysqldb
   - rrdtool
   - snmp
   - snmpd
   - whois
   - acl
-  - php-ldap
   - monitoring-plugins
   - nagios-plugins-contrib
   - python3-pip
@@ -114,6 +113,8 @@ librenms_config_nets: []
 # - 192.168.10.0/24
 
 # snmp configuration
+librenms_config_snmp_timeout: 1
+librenms_config_snmp_retries: 3
 librenms_config_snmp_community: community
 librenms_config_snmp_authlevel: authPriv
 # must be set!
