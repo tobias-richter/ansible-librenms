@@ -23,7 +23,7 @@ dependencies:
     mysql_packages:
       - mariadb-client
       - mariadb-server
-      - python-mysqldb
+      - python3-mysqldb
     mysql_databases: "{{ librenms_sql_databases }}"
     mysql_users: "{{ librenms_sql_users }}"
     mysql_bind_address: '127.0.0.1'
