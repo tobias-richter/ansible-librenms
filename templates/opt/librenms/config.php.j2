@@ -29,6 +29,8 @@ $config['update_channel'] = 'release';  # uncomment to follow the monthly releas
 
 ### SNMP configuration
 $config['snmp']['community']            = array("{{ librenms_config_snmp_community }}");
+$config['snmp']['timeout'] = {{ librenms_config_snmp_timeout }};
+$config['snmp']['retries'] = {{ librenms_config_snmp_retries }};
 $config['snmp']['version']              = ['v3', 'v2c', 'v1'];
 $config['snmp']['v3'][1]['authlevel']   = "authPriv";
 $config['snmp']['v3'][1]['authname']    = "{{ librenms_config_snmp_authname | mandatory }}";
