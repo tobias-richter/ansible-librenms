@@ -9,6 +9,7 @@
     dest: /opt/librenms/config.php
     owner: "{{ librenms_user }}"
     group: "{{ librenms_group }}"
+    mode: 0640
   notify:
     - restart apache
 
@@ -16,5 +17,6 @@
   template:
     src: etc/cron.d/librenms.j2
     dest: /etc/cron.d/librenms
+    mode: 0644
   tags:
     - cron

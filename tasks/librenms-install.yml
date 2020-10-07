@@ -85,9 +85,11 @@
     src: "{{ librenms_home }}/librenms.nonroot.cron"
     dest: /etc/cron.d/librenms
     remote_src: true
+    mode: 0644
 
 - name: Deploy logrotate
   copy:
     src: "{{ librenms_home }}/misc/librenms.logrotate"
     dest: /etc/logrotate.d/librenms
     remote_src: true
+    mode: 0644
