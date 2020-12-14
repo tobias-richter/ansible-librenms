@@ -1,6 +1,6 @@
 # tobias_richter.librenms
 
-[![Build Status](https://travis-ci.org/tobias-richter/ansible-librenms.svg?branch=master)](https://travis-ci.org/tobias-richter/ansible-librenms)
+[![Build Status](https://github.com/tobias-richter/ansible-librenms/workflows/CI/badge.svg)](https://github.com/tobias-richter/ansible-librenms/actions)
 
 This role installs and configures librems.
 
