@@ -152,3 +152,9 @@ librenms_config_influxdb_password: librenms
 # The services to restart when php.ini was touched
 librenms_php_restart_services:
   - apache2
+
+librenms_nagios_plugins_dir: /usr/lib/nagios/plugins
+
+librenms_nagios_plugins:
+  - url: https://gist.githubusercontent.com/tobias-richter/5d73a0bab773ee24f01a93cea20059d9/raw/500514d391211e5cfe98f51ca5a4067e77fabe1a/check_mdraid_mismatch
+    name: check_mdraid_mismatch

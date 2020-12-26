@@ -14,6 +14,12 @@
     - librenms-install
     - librenms
 
+- name: Install nagios plugins.
+  import_tasks: nagios_plugins.yml
+  tags:
+    - nagios-plugins
+    - nagios
+
 - name: Configure librenms.
   import_tasks: librenms-config.yml
   tags:
