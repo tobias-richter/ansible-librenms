@@ -1,3 +1,2 @@
 ---
-roles:
-  - name: geerlingguy.mysql
+- name: geerlingguy.mysql
