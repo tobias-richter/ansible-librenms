@@ -11,6 +11,8 @@
     no_dev: yes
     prefer_dist: yes
     working_dir: /tmp
+  become: true
+  become_user: "{{ librenms_user }}"
   when: not __librenms_path.stat.exists
 
 - name: Change ownership
