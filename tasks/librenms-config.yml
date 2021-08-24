@@ -1,3 +1,4 @@
+---
 - name: Check if config.php is present
   stat:
     path: /opt/librenms/config.php

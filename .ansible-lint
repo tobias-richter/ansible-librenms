@@ -1,2 +1,6 @@
 exclude_paths:
   - ./tests/requirements
+
+
+warn_list:
+    - yaml

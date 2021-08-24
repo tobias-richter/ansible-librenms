@@ -1,3 +1,4 @@
+---
 - name: Check if librenms is already installed
   stat:
     path: "{{ librenms_home }}"
@@ -62,7 +63,7 @@
   tags:
     - pip
 
-- name: Update running daily.sh. # noqa 301
+- name: Update running daily.sh.  # noqa 301
   command: "./daily.sh"
   args:
     chdir: "{{ librenms_home }}"
@@ -71,7 +72,7 @@
   tags:
     - migrate
 
-- name: Initially set admin user password. # noqa 301
+- name: Initially set admin user password.  # noqa 301
   command: "./adduser.php {{ librenms_admin_user }} {{ librenms_admin_password }} 10"
   args:
     chdir: "{{ librenms_home }}"

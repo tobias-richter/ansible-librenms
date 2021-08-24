@@ -1,3 +1,4 @@
+---
 # package to install
 librenms_packages:
   - curl
@@ -118,20 +119,20 @@ librenms_config_snmp_retries: 3
 librenms_config_snmp_community: community
 librenms_config_snmp_authlevel: authPriv
 # must be set!
-#librenms_config_snmp_authname: # "snmp-user"
-#librenms_config_snmp_authpass: # "snmp-password"
-#librenms_config_snmp_cryptopass: # "snmp-encryption"
+# librenms_config_snmp_authname: # "snmp-user"
+# librenms_config_snmp_authpass: # "snmp-password"
+# librenms_config_snmp_cryptopass: # "snmp-encryption"
 
 # When set to true ldap is configured and the other ldap variables must be set
 librenms_config_ldap: false
 # The server to use
-librenms_config_auth_ldap_server: # e.g. ldap.main.corp
+librenms_config_auth_ldap_server:  # e.g. ldap.main.corp
 # The server to use
-librenms_config_auth_ldap_suffix: # e.g. "ou=users,ou=location,dc=main,dc=corp"
-librenms_config_auth_ldap_groupbase: # e.g. "ou=groups,ou=location,dc=main,dc=corp"
-librenms_config_auth_ldap_group: # e.g. "cn=all,ou=groups,ou=location,dc=main,dc=corp"
-librenms_config_auth_ldap_binddn: # e.g. "uid=ldapbind,ou=system,ou=location,dc=main,dc=corp"
-librenms_config_auth_ldap_bindpassword: # e.g. "password_from_ldapbinduser"
+librenms_config_auth_ldap_suffix:  # e.g. "ou=users,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_groupbase:  # e.g. "ou=groups,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_group:  # e.g. "cn=all,ou=groups,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_binddn:  # e.g. "uid=ldapbind,ou=system,ou=location,dc=main,dc=corp"
+librenms_config_auth_ldap_bindpassword:  # e.g. "password_from_ldapbinduser"
 
 # Enables, disables proxmox in librenms
 librenms_config_enable_proxmox: 1

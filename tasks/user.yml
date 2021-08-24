@@ -1,3 +1,4 @@
+---
 - name: Create librenms group.
   group:
     name: "librenms"
@@ -9,7 +10,7 @@
     shell: /bin/bash
     group:
     groups:
-    - librenms
+      - librenms
     home: /opt/librenms
     create_home: no
     append: no

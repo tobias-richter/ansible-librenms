@@ -1,5 +1,7 @@
+---
 galaxy_info:
   role_name: librenms
+  namespace: tobias_richter
   author: Tobias Richter
   description: Ansible Role for setting up and managing librenms.
   license: Apache

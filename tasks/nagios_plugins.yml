@@ -1,3 +1,4 @@
+---
 - name: Install additional nagios plugins.
   get_url:
     url: "{{ item.url }}"
