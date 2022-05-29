@@ -22,15 +22,16 @@ galaxy_info:
 
 dependencies:
   - role: geerlingguy.mysql
-    mysql_packages:
-      - mariadb-client
-      - mariadb-server
-      - python3-mysqldb
-    mysql_databases: "{{ librenms_sql_databases }}"
-    mysql_users: "{{ librenms_sql_users }}"
-    mysql_bind_address: '127.0.0.1'
-    mysql_innodb_file_per_table: "1"
-    mysql_lower_case_table_names: "0"
+    vars:
+      mysql_packages:
+        - mariadb-client
+        - mariadb-server
+        - python3-mysqldb
+      mysql_databases: "{{ librenms_sql_databases }}"
+      mysql_users: "{{ librenms_sql_users }}"
+      mysql_bind_address: '127.0.0.1'
+      mysql_innodb_file_per_table: "1"
+      mysql_lower_case_table_names: "0"
     tags:
       - mysql
       - dependency
