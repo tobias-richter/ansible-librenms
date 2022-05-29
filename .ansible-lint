@@ -4,5 +4,6 @@ exclude_paths:
   - .github
 
 warn_list:
+  - schema
   - experimental  # all rules tagged as experimental
   - fqcn-builtins  # Use FQCN for builtin actions.
