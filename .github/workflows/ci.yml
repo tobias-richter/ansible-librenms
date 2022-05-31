@@ -1,7 +1,7 @@
 name: CI
 
 env:
-  ROLE_NAME: python
+  ROLE_NAME: librenms
 
 on:
   push:
