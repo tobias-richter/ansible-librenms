@@ -1,8 +1,5 @@
 name: CI
 
-env:
-  ROLE_NAME: librenms
-
 on:
   push:
     branches: [ master ]
