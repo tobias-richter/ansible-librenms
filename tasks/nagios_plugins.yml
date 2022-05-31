@@ -1,6 +1,6 @@
 ---
 - name: Install additional nagios plugins.
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ librenms_nagios_plugins_dir }}/{{ item.name }}"
     mode: 0755

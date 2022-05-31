@@ -1,11 +1,11 @@
 ---
 - name: Check if config.php is present
-  stat:
+  ansible.builtin.stat:
     path: /opt/librenms/config.php
   register: __librenms_config
 
 - name: Deploy config.php
-  template:
+  ansible.builtin.template:
     src: opt/librenms/config.php.j2
     dest: /opt/librenms/config.php
     owner: "{{ librenms_user }}"
@@ -15,7 +15,7 @@
     - restart apache
 
 - name: Deploy librenms cron config.
-  template:
+  ansible.builtin.template:
     src: etc/cron.d/librenms.j2
     dest: /etc/cron.d/librenms
     mode: 0644

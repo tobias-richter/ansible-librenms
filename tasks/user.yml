@@ -1,11 +1,11 @@
 ---
 - name: Create librenms group.
-  group:
+  ansible.builtin.group:
     name: "librenms"
     state: present
 
 - name: Create librenms user.
-  user:
+  ansible.builtin.user:
     name: librenms
     shell: /bin/bash
     group:
@@ -20,7 +20,7 @@
     - restart apache
 
 - name: Add www-data to librenms group.
-  user:
+  ansible.builtin.user:
     name: www-data
     groups:
       - www-data

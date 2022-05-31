@@ -1,28 +1,28 @@
 ---
 - name: Install packages
-  import_tasks: packages.yml
+  ansible.builtin.import_tasks: packages.yml
   tags:
     - packages
 
 - name: Configure user.
-  import_tasks: user.yml
+  ansible.builtin.import_tasks: user.yml
   tags:
     - user
 
 - name: Install librenms.
-  import_tasks: librenms-install.yml
+  ansible.builtin.import_tasks: librenms-install.yml
   tags:
     - librenms-install
     - librenms
 
 - name: Install nagios plugins.
-  import_tasks: nagios_plugins.yml
+  ansible.builtin.import_tasks: nagios_plugins.yml
   tags:
     - nagios-plugins
     - nagios
 
 - name: Configure librenms.
-  import_tasks: librenms-config.yml
+  ansible.builtin.import_tasks: librenms-config.yml
   tags:
     - librenms-config
     - librenms

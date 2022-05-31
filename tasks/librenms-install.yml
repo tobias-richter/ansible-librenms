@@ -1,11 +1,11 @@
 ---
 - name: Check if librenms is already installed
-  stat:
+  ansible.builtin.stat:
     path: "{{ librenms_home }}"
   register: __librenms_path
 
 - name: Install librenms
-  composer:
+  ansible.builtin.composer:
     command: create-project
     arguments: --keep-vcs librenms/librenms /opt/librenms dev-master
     no_dev: yes
@@ -16,19 +16,19 @@
   when: not __librenms_path.stat.exists
 
 - name: Change ownership
-  file:
+  ansible.builtin.file:
     path: "{{ librenms_home }}"
     owner: "{{ librenms_user }}"
     group: "{{ librenms_group }}"
     recurse: true
 
 - name: "Apply permissions on {{ librenms_home }}"
-  file:
+  ansible.builtin.file:
     path: "{{ librenms_home }}"
     mode: u=rwX,g=rwX
 
 - name: Set acls
-  acl:
+  ansible.builtin.acl:
     default: "{{ item.default | default(false) }}"
     path: "{{ item.path }}"
     permissions: "rwx"
@@ -57,7 +57,7 @@
       recursive: true
 
 - name: Install python requirements.
-  pip:
+  ansible.builtin.pip:
     executable: /usr/bin/pip3
     requirements: "{{ librenms_home }}/requirements.txt"
   become_user: "{{ librenms_user }}"
@@ -66,7 +66,7 @@
     - pip
 
 - name: Update running daily.sh.  # noqa 301
-  command: "./daily.sh"
+  ansible.builtin.command: "./daily.sh"
   args:
     chdir: "{{ librenms_home }}"
   become_user: "{{ librenms_user }}"
@@ -75,7 +75,7 @@
     - migrate
 
 - name: Initially set admin user password.  # noqa 301
-  command: "./adduser.php {{ librenms_admin_user }} {{ librenms_admin_password }} 10"
+  ansible.builtin.command: "./adduser.php {{ librenms_admin_user }} {{ librenms_admin_password }} 10"
   args:
     chdir: "{{ librenms_home }}"
   become_user: "{{ librenms_user }}"
@@ -84,14 +84,14 @@
     - migrate
 
 - name: Deploy cronjob
-  copy:
+  ansible.builtin.copy:
     src: "{{ librenms_home }}/librenms.nonroot.cron"
     dest: /etc/cron.d/librenms
     remote_src: true
     mode: 0644
 
 - name: Deploy logrotate
-  copy:
+  ansible.builtin.copy:
     src: "{{ librenms_home }}/misc/librenms.logrotate"
     dest: /etc/logrotate.d/librenms
     remote_src: true
