@@ -101,13 +101,13 @@ librenms_ignore_mounts_regexp: []
 #  - /^\/raidsys\/\d+/
 
 # Path to the rrdached socket.
-librenms_rrdcached: unix:/var/run/rrdcached.sock
+librenms_rrdcached: unix:/run/rrdcached.sock
 
 # The rrdtool version that is used
-librenms_rrdtool_version: 1.7.0
+librenms_rrdtool_version: 1.7.2
 
 # Parallel threads for the librenms poller
-librenms_poller_threads: 4
+librenms_poller_threads: 3
 
 # Networks for autodiscovery
 librenms_config_nets: []
