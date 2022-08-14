@@ -101,7 +101,7 @@ librenms_ignore_mounts_regexp: []
 #  - /^\/raidsys\/\d+/
 
 # Path to the rrdached socket.
-librenms_rrdcached: unix:/run/rrdcached.sock
+# librenms_rrdcached: unix:/run/rrdcached.sock
 
 # The rrdtool version that is used
 librenms_rrdtool_version: 1.7.2
@@ -149,6 +149,17 @@ librenms_config_influxdb_db: librenms
 librenms_config_influxdb_username: librenms
 # The password for the influxdb
 librenms_config_influxdb_password: librenms
+
+# cleanup options, see https://docs.librenms.org/Support/Cleanup-options/
+librenms_config_eventlog_purge: 30
+librenms_config_syslog_purge: 30
+librenms_config_route_purge: 10
+librenms_config_alert_log_purge: 365
+librenms_config_authlog_purge: 30
+librenms_config_ports_fdb_purge: 10
+librenms_config_device_perf_purge: 7
+librenms_config_rrd_purge: 0
+librenms_config_ports_purge: 10
 
 # The services to restart when php.ini was touched
 librenms_php_restart_services:

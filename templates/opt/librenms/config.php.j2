@@ -105,3 +105,13 @@ $config['influxdb']['password'] = '{{ librenms_config_influxdb_password }}';
 $config['influxdb']['timeout'] = 0;
 $config['influxdb']['verifySSL'] = false;
 {% endif %}
+
+$config['eventlog_purge']    = {{ librenms_config_eventlog_purge }};
+$config['syslog_purge']      = {{ librenms_config_syslog_purge }};
+$config['route_purge']       = {{ librenms_config_route_purge }};
+$config['alert_log_purge']   = {{ librenms_config_alert_log_purge }};
+$config['authlog_purge']     = {{ librenms_config_authlog_purge }};
+$config['ports_fdb_purge']   = {{ librenms_config_ports_fdb_purge }};
+$config['device_perf_purge'] = {{ librenms_config_device_perf_purge }};
+$config['rrd_purge']         = {{ librenms_config_rrd_purge }};
+$config['ports_purge']       = {{ librenms_config_ports_purge }};
