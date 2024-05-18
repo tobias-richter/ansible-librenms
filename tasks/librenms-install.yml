@@ -21,6 +21,8 @@
     owner: "{{ librenms_user }}"
     group: "{{ librenms_group }}"
     recurse: true
+  tags:
+    - ownership
 
 - name: "Apply permissions on {{ librenms_home }}"
   ansible.builtin.file:
@@ -73,19 +75,25 @@
   become: yes
   tags:
     - migrate
+    - daily_sh
 
 - name: Initially set admin user password.  # noqa 301
-  ansible.builtin.command: "./adduser.php {{ librenms_admin_user }} {{ librenms_admin_password }} 10"
+  ansible.builtin.command: "./lnms user:add --role admin --password={{ librenms_admin_password }} {{ librenms_admin_user }}"
   args:
     chdir: "{{ librenms_home }}"
   become_user: "{{ librenms_user }}"
   become: yes
+  register: admin_user_result
+  changed_when: not admin_user_result.stdout is search("The username has already been taken")
+  failed_when:
+    - admin_user_result.rc != 0
+    - not admin_user_result.stdout is search("The username has already been taken")
   tags:
     - migrate
 
 - name: Deploy cronjob
   ansible.builtin.copy:
-    src: "{{ librenms_home }}/librenms.nonroot.cron"
+    src: "{{ librenms_home }}/dist/librenms.cron"
     dest: /etc/cron.d/librenms
     remote_src: true
     mode: 0644
