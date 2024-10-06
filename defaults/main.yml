@@ -20,6 +20,14 @@ librenms_packages:
   - monitoring-plugins
   - nagios-plugins-contrib
   - python3-pip
+  - python3-command-runner
+  - python3-pymysql
+  - python3-dotenv
+  - python3-redis
+  - python3-setuptools
+  - python3-psutil
+  - python3-systemd
+  - python3-pip
 
 # User and group to create with home directory
 librenms_user: librenms

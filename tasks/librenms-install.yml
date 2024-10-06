@@ -58,15 +58,6 @@
     - path: "{{ librenms_home }}/storage/"
       recursive: true
 
-- name: Install python requirements.
-  ansible.builtin.pip:
-    executable: /usr/bin/pip3
-    requirements: "{{ librenms_home }}/requirements.txt"
-  become_user: "{{ librenms_user }}"
-  become: yes
-  tags:
-    - pip
-
 - name: Update running daily.sh.  # noqa 301
   ansible.builtin.command: "./daily.sh"
   args:
