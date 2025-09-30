@@ -115,3 +115,5 @@ $config['ports_fdb_purge']   = {{ librenms_config_ports_fdb_purge }};
 $config['device_perf_purge'] = {{ librenms_config_device_perf_purge }};
 $config['rrd_purge']         = {{ librenms_config_rrd_purge }};
 $config['ports_purge']       = {{ librenms_config_ports_purge }};
+
+{{ librenms_config_custom | default('') }}

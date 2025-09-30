@@ -178,3 +178,6 @@ librenms_nagios_plugins_dir: /usr/lib/nagios/plugins
 librenms_nagios_plugins:
   - url: https://gist.githubusercontent.com/tobias-richter/5d73a0bab773ee24f01a93cea20059d9/raw/df17577e2bade03fa5068c5571b5bbb2e6cff6d2/check_mdraid_mismatch
     name: check_mdraid_mismatch
+
+# this part will be directly written into the config.php
+# librenms_config_custom:
