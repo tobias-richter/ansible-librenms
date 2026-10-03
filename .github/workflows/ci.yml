@@ -1,45 +1,55 @@
+---
 name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
+
+permissions:
+  contents: read
 
 jobs:
   lint:
     name: lint & syntax check
-
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Cache PIP
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            
-      - name: Install role requirements
-        uses: BSFishy/pip-action@v1
-        with:
-          requirements: "requirements.txt"
+        uses: actions/checkout@v7
 
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install ansible
+        run: pip install ansible
+
+      # The checkout directory is named after the repository, so the role
+      # resolves as ansible-librenms via the parent directory.
       - name: Create ansible.cfg
-        run: "printf '[defaults]\nroles_path=./tests/requirements/:../' > ansible.cfg"
+        run: printf '[defaults]\nroles_path=./tests/requirements/:../\n' > ansible.cfg
 
-      - name: ansible-lint
-        uses: ansible-community/ansible-lint-action@v6.2.1
+      - name: Install test requirements
+        run: ansible-galaxy role install -r tests/requirements.yml -p tests/requirements
 
       - name: ansible-playbook syntax check
-        uses: dawidd6/action-ansible-playbook@3c534b3ba0bcbbee2b13fb45226f71acbaca2a76
+        run: ansible-playbook --syntax-check -i tests/inventory tests/test.yml
+
+      - name: ansible-lint
+        uses: ansible/ansible-lint@v26.9.0
+
+  import:
+    name: import
+    needs: lint
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger a new import on Galaxy.
+        uses: robertdebock/galaxy-action@1.2.1
         with:
-          playbook: tests/test.yml
-          directory: "."
-          requirements: tests/requirements.yml
-          options: --syntax-check -i tests/inventory
-        
+          galaxy_api_key: ${{ secrets.GALAXY_API_KEY }}

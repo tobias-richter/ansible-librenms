@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: librenms
+  namespace: tobias_richter
   author: Tobias Richter
   description: Ansible Role for setting up and managing librenms.
   license: Apache
@@ -29,7 +30,7 @@ dependencies:
         - python3-mysqldb
       mysql_databases: "{{ librenms_sql_databases }}"
       mysql_users: "{{ librenms_sql_users }}"
-      mysql_bind_address: '127.0.0.1'
+      mysql_bind_address: "127.0.0.1"
       mysql_innodb_file_per_table: "1"
       mysql_lower_case_table_names: "0"
     tags:

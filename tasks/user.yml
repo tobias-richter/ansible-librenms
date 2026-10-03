@@ -12,12 +12,12 @@
     groups:
       - librenms
     home: /opt/librenms
-    create_home: no
-    append: no
-    system: yes
+    create_home: false
+    append: false
+    system: true
     state: present
   notify:
-    - restart apache
+    - Restart apache
 
 - name: Add www-data to librenms group.
   ansible.builtin.user:
@@ -26,4 +26,4 @@
       - www-data
       - librenms
   notify:
-    - restart apache
+    - Restart apache
