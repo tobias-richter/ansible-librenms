@@ -1,7 +1,7 @@
 ---
 exclude_paths:
-  - ./tests/requirements
-  - .github
+  - tests/requirements/
+  - .github/
 
 warn_list:
   - experimental  # all rules tagged as experimental

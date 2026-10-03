@@ -25,7 +25,12 @@ for setting up rrdcached on your server.
 
 ## Requirements
 
-This role requires Ansible 2.7 or higher.
+This role requires ansible-core 2.18 or higher (the current community.general release needs it) and the collections listed in
+`collections/requirements.yml` (`community.general`, `ansible.posix`):
+
+```bash
+ansible-galaxy collection install -r collections/requirements.yml
+```
 
 ## Role Variables
 

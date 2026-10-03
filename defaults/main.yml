@@ -66,17 +66,17 @@ librenms_config_mydomain: "{{ inventory_hostname }}"
 
 # Ignore interfaces
 librenms_config_bad_if_regexps:
-  - '/^docker[\w]+$/'
-  - '/^lxcbr[0-9]+$/'
-  - '/^fwln.+$/'
-  - '/^fwpr.+$/'
-  - '/^fwbr.+$/'
-  - '/^br.+$/'
-  - '/^veth.*$/'
-  - '/^virbr.*$/'
-  - '/^lo$/'
-  - '/^sit.*$/'
-  - '/^dummy.*$/'
+  - "/^docker[\\w]+$/"
+  - "/^lxcbr[0-9]+$/"
+  - "/^fwln.+$/"
+  - "/^fwpr.+$/"
+  - "/^fwbr.+$/"
+  - "/^br.+$/"
+  - "/^veth.*$/"
+  - "/^virbr.*$/"
+  - "/^lo$/"
+  - "/^sit.*$/"
+  - "/^dummy.*$/"
 #  - '/^macvtap.*$/'
 #  - '/tun[0-9]+$/'
 

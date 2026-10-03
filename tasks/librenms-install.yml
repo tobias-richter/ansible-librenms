@@ -5,11 +5,11 @@
   register: __librenms_path
 
 - name: Install librenms
-  ansible.builtin.composer:
+  community.general.composer:
     command: create-project
     arguments: --keep-vcs librenms/librenms /opt/librenms dev-master
-    no_dev: yes
-    prefer_dist: yes
+    no_dev: true
+    prefer_dist: true
     working_dir: /tmp
   become: true
   become_user: "{{ librenms_user }}"
@@ -30,7 +30,7 @@
     mode: u=rwX,g=rwX
 
 - name: Set acls
-  ansible.builtin.acl:
+  ansible.posix.acl:
     default: "{{ item.default | default(false) }}"
     path: "{{ item.path }}"
     permissions: "rwx"
@@ -58,22 +58,22 @@
     - path: "{{ librenms_home }}/storage/"
       recursive: true
 
-- name: Update running daily.sh.  # noqa 301
+- name: Update running daily.sh. # noqa: no-changed-when
   ansible.builtin.command: "./daily.sh"
   args:
     chdir: "{{ librenms_home }}"
   become_user: "{{ librenms_user }}"
-  become: yes
+  become: true
   tags:
     - migrate
     - daily_sh
 
-- name: Initially set admin user password.  # noqa 301
+- name: Initially set admin user password. # noqa: no-changed-when
   ansible.builtin.command: "./lnms user:add --role admin --password={{ librenms_admin_password }} {{ librenms_admin_user }}"
   args:
     chdir: "{{ librenms_home }}"
   become_user: "{{ librenms_user }}"
-  become: yes
+  become: true
   register: admin_user_result
   changed_when: not admin_user_result.stdout is search("The username has already been taken")
   failed_when:
@@ -87,11 +87,11 @@
     src: "{{ librenms_home }}/dist/librenms.cron"
     dest: /etc/cron.d/librenms
     remote_src: true
-    mode: 0644
+    mode: "0644"
 
 - name: Deploy logrotate
   ansible.builtin.copy:
     src: "{{ librenms_home }}/misc/librenms.logrotate"
     dest: /etc/logrotate.d/librenms
     remote_src: true
-    mode: 0644
+    mode: "0644"

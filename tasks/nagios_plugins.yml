@@ -3,5 +3,5 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ librenms_nagios_plugins_dir }}/{{ item.name }}"
-    mode: 0755
+    mode: "0755"
   with_items: "{{ librenms_nagios_plugins }}"
